@@ -17,16 +17,25 @@ public class ServiceTwo {
 
     public void sendSpecifiedMessage(SpecifiedMessage specifiedMessage) {
 
-        SpecifiedMessageType messageType = specifiedMessage.getMessageType();
-        switch (messageType) {
-            case ONE: sendMessage(messageQueues.get(0), specifiedMessage);
-            case TWO: sendMessage(messageQueues.get(1), specifiedMessage);
-            case THREE: sendMessage(messageQueues.get(2), specifiedMessage);
-            case FOUR: sendMessage(messageQueues.get(3), specifiedMessage);
+        if (specifiedMessage != null) {
+
+            SpecifiedMessageType messageType = specifiedMessage.getMessageType();
+            switch (messageType) {
+                case ONE:
+                    sendMessage(messageQueues.get(0), specifiedMessage);
+                case TWO:
+                    sendMessage(messageQueues.get(1), specifiedMessage);
+                case THREE:
+                    sendMessage(messageQueues.get(2), specifiedMessage);
+                case FOUR:
+                    sendMessage(messageQueues.get(3), specifiedMessage);
+            }
         }
     }
 
     private void sendMessage(BlockingQueue messageQueue, SpecifiedMessage specifiedMessage) {
-        new Thread(new MessageProducer(messageQueue, specifiedMessage)).start();
+        if (messageQueue != null && specifiedMessage != null) {
+            new Thread(new MessageProducer(messageQueue, specifiedMessage)).start();
+        }
     }
 }
